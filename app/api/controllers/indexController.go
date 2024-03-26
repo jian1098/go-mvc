@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/spf13/cast" // 使用cast包进行类型转换
-	"go-mvc/app/structs"
+	"go-mvc/app/models"
 	"net/http"
 )
 
@@ -43,7 +43,7 @@ func (con IndexController) Post(c *gin.Context) {
 
 // Bind方法
 func (con IndexController) Bind(c *gin.Context) {
-	var person structs.Person
+	var person models.Person
 	err := c.ShouldBind(&person)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -80,7 +80,7 @@ func (con IndexController) Upload(c *gin.Context) {
 
 // 数据库操作
 func (con IndexController) Db(c *gin.Context) {
-	var user structs.User
+	var user models.User
 	err := db.Where("id = ?", 36).First(&user).Error
 	if err != nil {
 		ApiRequsetFail(c, err.Error())

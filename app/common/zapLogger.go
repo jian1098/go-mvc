@@ -28,7 +28,7 @@ func GetLogger() *zap.SugaredLogger {
 
 	//info文件writeSyncer
 	infoFileWriteSyncer := zapcore.AddSync(&lumberjack.Logger{
-		Filename:   os.Getenv("INFO_LEVEL_PATH"),             //日志文件存放目录，如果文件夹不存在会自动创建
+		Filename:   os.Getenv("LOG_PATH") + "/info.log",      //日志文件存放目录，如果文件夹不存在会自动创建
 		MaxSize:    cast.ToInt(os.Getenv("LOG_MAX_SIZE")),    //文件大小限制,单位MB
 		MaxBackups: cast.ToInt(os.Getenv("LOG_MAX_BACKUPS")), //最大保留日志文件数量
 		MaxAge:     cast.ToInt(os.Getenv("LOG_MAX_AGE")),     //日志文件保留天数
@@ -37,7 +37,7 @@ func GetLogger() *zap.SugaredLogger {
 	infoFileCore := zapcore.NewCore(encoder, zapcore.NewMultiWriteSyncer(infoFileWriteSyncer, zapcore.AddSync(os.Stdout)), lowPriority) //第三个及之后的参数为写入文件的日志级别,ErrorLevel模式只记录error级别的日志
 	//error文件writeSyncer
 	errorFileWriteSyncer := zapcore.AddSync(&lumberjack.Logger{
-		Filename:   os.Getenv("ERROR_LEVEL_PATH"),            //日志文件存放目录
+		Filename:   os.Getenv("LOG_PATH") + "/error.log",     //日志文件存放目录
 		MaxSize:    cast.ToInt(os.Getenv("LOG_MAX_SIZE")),    //文件大小限制,单位MB
 		MaxBackups: cast.ToInt(os.Getenv("LOG_MAX_BACKUPS")), //最大保留日志文件数量
 		MaxAge:     cast.ToInt(os.Getenv("LOG_MAX_AGE")),     //日志文件保留天数

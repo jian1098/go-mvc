@@ -1,4 +1,4 @@
-package structs
+package models
 
 // Person结构体用于接收参数,如果是json数据把form改为json
 // binding为参数验证器，更新规则可以参考下面两个网站
