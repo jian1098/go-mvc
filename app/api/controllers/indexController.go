@@ -81,8 +81,9 @@ func (con IndexController) Upload(c *gin.Context) {
 // 数据库操作
 func (con IndexController) Db(c *gin.Context) {
 	var user models.User
-	err := db.Where("id = ?", 36).First(&user).Error
+	err := db.Where("id = ?", 0).First(&user).Error
 	if err != nil {
+		logger.Error(err)
 		ApiRequsetFail(c, err.Error())
 	} else {
 		ApiRequsetSuccess(c, user, "请求成功")
