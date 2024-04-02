@@ -15,7 +15,7 @@ type IndexController struct {
 
 // Demo方法
 func (con IndexController) Demo(c *gin.Context) {
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"module": con.GetModuleName(),
 		"msg":    "hello gin!",
 	})
@@ -26,7 +26,7 @@ func (con IndexController) Get(c *gin.Context) {
 	name := c.Query("name")                //获取get参数值
 	name = c.DefaultQuery("name", "Guest") //设置默认参数值
 
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"module": con.GetModuleName(),
 		"msg":    "hello " + name,
 	})
@@ -35,7 +35,7 @@ func (con IndexController) Get(c *gin.Context) {
 // Post方法
 func (con IndexController) Post(c *gin.Context) {
 	name := c.PostForm("name") //获取post参数值
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"module": con.GetModuleName(),
 		"msg":    "hello " + name,
 	})
