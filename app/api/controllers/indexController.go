@@ -84,8 +84,8 @@ func (con IndexController) Db(c *gin.Context) {
 	err := db.Where("id = ?", 0).First(&user).Error
 	if err != nil {
 		logger.Error(err)
-		ApiRequsetFail(c, err.Error())
+		ResponseError(c, err.Error())
 	} else {
-		ApiRequsetSuccess(c, user, "请求成功")
+		ResponseSuccess(c, user, "请求成功")
 	}
 }

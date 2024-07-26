@@ -32,7 +32,7 @@ func (con BaseController) GetModuleName() string {
 }
 
 // api请求成功响应方法
-func ApiRequsetSuccess(c *gin.Context, data interface{}, msg string) {
+func ResponseSuccess(c *gin.Context, data interface{}, msg string) {
 	if msg == "" {
 		msg = constants.API_SUCCESS_MSG
 	}
@@ -45,7 +45,7 @@ func ApiRequsetSuccess(c *gin.Context, data interface{}, msg string) {
 }
 
 // api请求失败响应方法
-func ApiRequsetFail(c *gin.Context, msg string) {
+func ResponseError(c *gin.Context, msg string) {
 	if msg == "" {
 		msg = constants.API_FAIL_MSG
 	}

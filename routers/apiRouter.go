@@ -25,5 +25,7 @@ func initApiRouter(router *gin.Engine) {
 		apiRouter.POST("/index/upload", api.IndexController{}.Upload)
 		//数据库操作
 		apiRouter.GET("/index/db", api.IndexController{}.Db)
+
+		apiRouter.POST("/user/login", api.UserController{}.Login)
 	}
 }
