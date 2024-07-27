@@ -1,12 +1,13 @@
 package api
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	common2 "go-mvc/app/common"
 	"go-mvc/app/constants"
-	"go.uber.org/zap"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
+	"go.uber.org/zap"
 )
 
 // 基类控制器
@@ -32,12 +33,14 @@ func (con BaseController) GetModuleName() string {
 }
 
 // api请求成功响应方法
-func ResponseSuccess(c *gin.Context, data interface{}, msg string) {
+func ResponseSuccess(c *gin.Context, data interface{}, msg string, statusCode ...int) {
 	if msg == "" {
 		msg = constants.API_SUCCESS_MSG
 	}
+
+	var code int = constants.API_SUCCESS_CODE
 	c.JSON(http.StatusOK, gin.H{
-		"code": constants.API_SUCCESS_CODE,
+		"code": code,
 		"msg":  msg,
 		"data": data,
 	})
@@ -45,12 +48,14 @@ func ResponseSuccess(c *gin.Context, data interface{}, msg string) {
 }
 
 // api请求失败响应方法
-func ResponseError(c *gin.Context, msg string) {
+func ResponseError(c *gin.Context, msg string, statusCode ...int) {
 	if msg == "" {
 		msg = constants.API_FAIL_MSG
 	}
+
+	var code int = constants.API_FAIL_CODE
 	c.JSON(http.StatusOK, gin.H{
-		"code": constants.API_FAIL_CODE,
+		"code": code,
 		"msg":  msg,
 		"data": nil,
 	})

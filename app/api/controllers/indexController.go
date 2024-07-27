@@ -1,11 +1,12 @@
 package api
 
 import (
+	"go-mvc/app/models"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/spf13/cast" // 使用cast包进行类型转换
-	"go-mvc/app/models"
-	"net/http"
 )
 
 // 继承BaseController
@@ -32,7 +33,7 @@ func (con IndexController) Get(c *gin.Context) {
 	})
 }
 
-// Post方法
+// Post Post方法
 func (con IndexController) Post(c *gin.Context) {
 	name := c.PostForm("name") //获取post参数值
 	c.JSON(http.StatusOK, gin.H{

@@ -11,8 +11,8 @@ type Person struct {
 
 // user表gorm结构体
 type User struct {
-	Id       uint   `gorm:"column:id;type:int(10) unsigned;primary_key;AUTO_INCREMENT;comment:ID" json:"id"` // 自增主键
-	Nickname string `gorm:"column:nickname;type:varchar(50);comment:昵称" json:"nickname"`
-	Email    string `gorm:"column:email;type:varchar(100);comment:邮箱" json:"email"`
-	Avatar   string `gorm:"column:avatar;type:varchar(255);comment:头像" json:"avatar"`
+	Id       int    `gorm:"column:id;type:int(10) unsigned;primary_key;AUTO_INCREMENT;comment:ID" json:"id"` // 自增主键
+	Name     string `gorm:"column:name;type:varchar(50);comment:用户名" json:"name"`
+	Mobile   string `gorm:"column:mobile;type:varchar(100);comment:手机号码" json:"mobile"`
+	Password string `gorm:"column:password;type:varchar(255);comment:密码" json:"password"`
 }

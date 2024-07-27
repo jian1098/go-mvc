@@ -2,6 +2,8 @@ package api
 
 import (
 	"go-mvc/app/api/requests"
+	"go-mvc/app/common"
+	"go-mvc/app/models"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -12,13 +14,44 @@ type UserController struct {
 	BaseController
 }
 
-// 登录方法
+// 用户登录
 func (con UserController) Login(c *gin.Context) {
-	var form requests.UserForm
+	var form requests.LoginForm
 	if err := c.ShouldBind(&form); err != nil && err.Error() != "" {
 		ResponseError(c, err.Error())
 		return
 	}
 
-	ResponseSuccess(c, form, "登录成功")
+	//查找用户
+	var user models.User
+	err := db.Where("mobile = ?", form.Mobile).First(&user).Error
+	if err != nil {
+		logger.Error(err)
+		ResponseError(c, err.Error())
+		return
+	}
+
+	// 验证密码
+	if user.Password != common.MD5(form.Password) {
+		ResponseError(c, "密码错误")
+		return
+	}
+
+	//生成token
+	res, err := common.CreateJwt(user.Id)
+	if err != nil {
+		ResponseError(c, err.Error())
+		return
+	}
+
+	//响应数据
+	responseData := map[string]interface{}{
+		"token":      res.Token,
+		"expires_at": res.ExpiresAt,
+		"user_id":    user.Id,
+		"user_name":  user.Name,
+	}
+
+	ResponseSuccess(c, responseData, "登录成功")
+	return
 }
