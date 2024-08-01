@@ -26,7 +26,6 @@ func (con UserController) Login(c *gin.Context) {
 	var user models.User
 	err := db.Where("mobile = ?", form.Mobile).First(&user).Error
 	if err != nil {
-		logger.Error(err)
 		ResponseError(c, err.Error())
 		return
 	}
@@ -54,4 +53,28 @@ func (con UserController) Login(c *gin.Context) {
 
 	ResponseSuccess(c, responseData, "登录成功")
 	return
+}
+
+// 用户信息
+func (con UserController) Info(c *gin.Context) {
+	userId, ok := GetUserId(c)
+	if !ok {
+		ResponseError(c, "请先登录")
+		return
+	}
+
+	//查找用户
+	var user models.User
+	err := db.Where("id = ?", userId).Select("id, name, mobile").First(&user).Error
+	if err != nil {
+		ResponseError(c, err.Error())
+		return
+	}
+	var userInfo = models.UserInfo{
+		Id:     user.Id,
+		Name:   user.Name,
+		Mobile: user.Mobile,
+	}
+
+	ResponseSuccess(c, userInfo, "请求成功")
 }

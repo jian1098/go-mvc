@@ -38,11 +38,11 @@ func CreateJwt(userId int) (*Jwt, error) {
 	}
 
 	//返回数据
-	jwtData := Jwt{}
+	jwtData := &Jwt{}
 	jwtData.Token = tokenString
 	jwtData.ExpiresAt = expiresAt
 
-	return &jwtData, err
+	return jwtData, err
 }
 
 // 解析JWT

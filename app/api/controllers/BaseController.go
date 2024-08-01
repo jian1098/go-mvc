@@ -4,6 +4,7 @@ import (
 	common2 "go-mvc/app/common"
 	"go-mvc/app/constants"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -60,4 +61,24 @@ func ResponseError(c *gin.Context, msg string, statusCode ...int) {
 		"data": nil,
 	})
 	return
+}
+
+/*
+*
+获取登录用户id
+*/
+func GetUserId(c *gin.Context) (int, bool) {
+	// 从HTTP头部中获取Authorization字段
+	token := c.Request.Header.Get("Authorization")
+	if token == "" {
+		return 0, false
+	}
+	token = strings.Replace(token, "Bearer ", "", -1)
+
+	//解析token
+	authInfo, ok := common2.ParseJwt(token)
+	if !ok {
+		return 0, false
+	}
+	return authInfo.UserId, true
 }

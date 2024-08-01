@@ -134,4 +134,5 @@ go run main.go
 | github.com/jinzhu/gorm         | gorm数据库包               |
 | github.com/go-sql-driver/mysql | mysql驱动，配合gorm使用    |
 | github.com/gookit/validate     | 验证器，支持验证场景和标签 |
+| github.com/dgrijalva/jwt-go    | jwt                        |
 

@@ -1,8 +1,9 @@
 package routers
 
 import (
+	api "go-mvc/app/api/controllers"
+
 	"github.com/gin-gonic/gin"
-	"go-mvc/app/api/controllers"
 )
 
 type ApiRouter struct {
@@ -27,5 +28,6 @@ func initApiRouter(router *gin.Engine) {
 		apiRouter.GET("/index/db", api.IndexController{}.Db)
 
 		apiRouter.POST("/user/login", api.UserController{}.Login)
+		apiRouter.GET("/user/info", api.UserController{}.Info)
 	}
 }
