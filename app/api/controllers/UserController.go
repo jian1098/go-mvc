@@ -4,6 +4,7 @@ import (
 	"go-mvc/app/api/requests"
 	"go-mvc/app/common"
 	"go-mvc/app/models"
+	"go-mvc/app/services"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -57,23 +58,13 @@ func (con UserController) Login(c *gin.Context) {
 
 // 用户信息
 func (con UserController) Info(c *gin.Context) {
-	userId, ok := GetUserId(c)
-	if !ok {
-		ResponseError(c, "请先登录")
-		return
-	}
+	userId := GetUserId(c)
 
-	//查找用户
-	var user models.User
-	err := db.Where("id = ?", userId).Select("id, name, mobile").First(&user).Error
+	//获取用户信息
+	userInfo, err := services.UserService{}.GetUserInfo(userId)
 	if err != nil {
 		ResponseError(c, err.Error())
 		return
-	}
-	var userInfo = models.UserInfo{
-		Id:     user.Id,
-		Name:   user.Name,
-		Mobile: user.Mobile,
 	}
 
 	ResponseSuccess(c, userInfo, "请求成功")

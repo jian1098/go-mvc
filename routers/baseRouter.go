@@ -2,7 +2,6 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-mvc/app/middlewares"
 )
 
 type BaseRouter struct {
@@ -16,9 +15,6 @@ func (br BaseRouter) InitRouter() *gin.Engine {
 	if err != nil {
 		return nil
 	}
-
-	//使用中间件
-	router.Use(middlewares.IPLimit())
 
 	//api路由
 	initApiRouter(router)

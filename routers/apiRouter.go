@@ -2,32 +2,44 @@ package routers
 
 import (
 	api "go-mvc/app/api/controllers"
+	"go-mvc/app/middlewares"
 
 	"github.com/gin-gonic/gin"
 )
 
+// API接口路由
 type ApiRouter struct {
 	BaseRouter
 }
 
 // api路由
 func initApiRouter(router *gin.Engine) {
-	apiRouter := router.Group("/api") //路由组前缀
+	//需要登录的路由组
+	loginGroup := router.Group("/api") //路由组前缀
+	//使用中间件
+	loginGroup.Use(middlewares.JwtAuth())
 	{
-		//demo
-		apiRouter.GET("/index/demo", api.IndexController{}.Demo)
-		//get
-		apiRouter.GET("/index/get", api.IndexController{}.Get)
-		//post
-		apiRouter.POST("/index/post", api.IndexController{}.Post)
-		//参数绑定到结构体
-		apiRouter.POST("/index/bind", api.IndexController{}.Bind)
-		//文件上传
-		apiRouter.POST("/index/upload", api.IndexController{}.Upload)
-		//数据库操作
-		apiRouter.GET("/index/db", api.IndexController{}.Db)
+		//用户路由组
+		userRouter := loginGroup.Group("/user")
+		userRouter.GET("/info", api.UserController{}.Info) //用户信息
 
-		apiRouter.POST("/user/login", api.UserController{}.Login)
-		apiRouter.GET("/user/info", api.UserController{}.Info)
+		//其他路由组
+
+	}
+
+	//不需要登录的路由组
+	noLoginGroup := router.Group("/api") //路由组前缀
+	{
+		//单独路由示例模块
+		noLoginGroup.GET("/index/demo", api.IndexController{}.Demo)      //demo
+		noLoginGroup.GET("/index/get", api.IndexController{}.Get)        //get
+		noLoginGroup.POST("/index/post", api.IndexController{}.Post)     //post
+		noLoginGroup.POST("/index/bind", api.IndexController{}.Bind)     //参数绑定到结构体
+		noLoginGroup.POST("/index/upload", api.IndexController{}.Upload) //文件上传
+		noLoginGroup.GET("/index/db", api.IndexController{}.Db)          //数据库操作
+
+		//用户路由组
+		noLoginUserRouter := noLoginGroup.Group("/user")
+		noLoginUserRouter.POST("/login", api.UserController{}.Login) //用户登录
 	}
 }
