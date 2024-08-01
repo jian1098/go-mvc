@@ -1,12 +1,13 @@
-package common
+package utils
 
 import (
 	"fmt"
+	"log"
+	"os"
+
 	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
 	"github.com/spf13/cast"
-	"log"
-	"os"
 )
 
 /**

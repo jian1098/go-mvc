@@ -1,7 +1,7 @@
 package services
 
 import (
-	"go-mvc/app/common"
+	"go-mvc/app/utils"
 
 	"github.com/jinzhu/gorm"
 	"go.uber.org/zap"
@@ -19,6 +19,6 @@ var db *gorm.DB               //数据库
 
 // 构造函数
 func init() {
-	logger = common.GetLogger()
-	db = common.GetDB()
+	logger = utils.GetLogger()
+	db = utils.GetDB()
 }

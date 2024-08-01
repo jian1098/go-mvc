@@ -1,8 +1,8 @@
 package api
 
 import (
-	common2 "go-mvc/app/common"
 	"go-mvc/app/constants"
+	"go-mvc/app/utils"
 	"net/http"
 
 	"github.com/spf13/cast"
@@ -25,8 +25,8 @@ var db *gorm.DB               //数据库
 
 // 构造函数
 func init() {
-	logger = common2.GetLogger()
-	db = common2.GetDB()
+	logger = utils.GetLogger()
+	db = utils.GetDB()
 }
 
 // 获取当前模块名称

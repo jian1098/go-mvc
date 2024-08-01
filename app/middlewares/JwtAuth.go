@@ -2,8 +2,8 @@ package middlewares
 
 import (
 	"fmt"
-	"go-mvc/app/common"
 	"go-mvc/app/constants"
+	"go-mvc/app/utils"
 	"net/http"
 	"strings"
 
@@ -16,7 +16,7 @@ func JwtAuth() gin.HandlerFunc {
 		token := c.Request.Header.Get("Authorization")
 		token = strings.Replace(token, "Bearer ", "", -1)
 		// 解析获取用户载荷信息
-		payLoad, ok := common.ParseJwt(token)
+		payLoad, ok := utils.ParseJwt(token)
 		fmt.Println("payLoad:", token, payLoad, ok)
 		if !ok {
 			var code = constants.API_FAIL_CODE

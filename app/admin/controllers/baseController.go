@@ -1,7 +1,8 @@
 package admin
 
 import (
-	"go-mvc/app/common"
+	"go-mvc/app/utils"
+
 	"go.uber.org/zap"
 )
 
@@ -17,7 +18,7 @@ var moduleName = "admin"      //模块名称
 
 // 构造函数
 func init() {
-	logger = common.GetLogger()
+	logger = utils.GetLogger()
 }
 
 // 获取当前模块名称

@@ -16,10 +16,3 @@ type User struct {
 	Mobile   string `gorm:"column:mobile;type:varchar(100);comment:手机号码" json:"mobile"`
 	Password string `gorm:"column:password;type:varchar(255);comment:密码" json:"password"`
 }
-
-// 用户信息
-type UserInfo struct {
-	Id     int
-	Name   string
-	Mobile string
-}

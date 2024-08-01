@@ -2,9 +2,9 @@ package api
 
 import (
 	"go-mvc/app/api/requests"
-	"go-mvc/app/common"
 	"go-mvc/app/models"
 	"go-mvc/app/services"
+	"go-mvc/app/utils"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -32,13 +32,13 @@ func (con UserController) Login(c *gin.Context) {
 	}
 
 	// 验证密码
-	if user.Password != common.MD5(form.Password) {
+	if user.Password != utils.MD5(form.Password) {
 		ResponseError(c, "密码错误")
 		return
 	}
 
 	//生成token
-	res, err := common.CreateJwt(user.Id)
+	res, err := utils.CreateJwt(user.Id)
 	if err != nil {
 		ResponseError(c, err.Error())
 		return

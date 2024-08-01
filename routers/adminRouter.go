@@ -1,10 +1,11 @@
 package routers
 
 import (
-	"github.com/gin-gonic/gin"
-	admin2 "go-mvc/app/admin/controllers"
+	admin "go-mvc/app/admin/controllers"
 	"os"
 	"path/filepath"
+
+	"github.com/gin-gonic/gin"
 )
 
 type AdminRouter struct {
@@ -21,8 +22,8 @@ func initAdminRouter(router *gin.Engine) {
 	adminRouter := router.Group("/admin") //路由组前缀
 	{
 		//后台首页
-		adminRouter.GET("/home/index", admin2.HomeController{}.Index)
+		adminRouter.GET("/home/index", admin.HomeController{}.Index)
 		//管理员列表
-		adminRouter.GET("/admin/index", admin2.AdminController{}.Index)
+		adminRouter.GET("/admin/index", admin.AdminController{}.Index)
 	}
 }

@@ -1,12 +1,13 @@
-package common
+package utils
 
 import (
+	"os"
+
 	"github.com/joho/godotenv"
 	"github.com/natefinch/lumberjack"
 	"github.com/spf13/cast"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"os"
 )
 
 func GetLogger() *zap.SugaredLogger {

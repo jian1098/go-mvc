@@ -1,16 +1,19 @@
 package services
 
-import "go-mvc/app/models"
+import (
+	"go-mvc/app/api/responses"
+	"go-mvc/app/models"
+)
 
 // 用户服务
 type UserService struct {
 	BaseService //继承BaseService
 }
 
-func (service UserService) GetUserInfo(userId int) (*models.UserInfo, error) {
+func (service UserService) GetUserInfo(userId int) (*responses.UserInfo, error) {
 	//查找用户
 	var user models.User
-	var userInfo models.UserInfo
+	var userInfo responses.UserInfo
 	err := db.Where("id = ?", userId).Select("id, name, mobile").First(&user).Error
 	if err != nil {
 		return &userInfo, err
