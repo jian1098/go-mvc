@@ -1,8 +1,24 @@
-# go-mvc
+<div align="center">
+<br/>
+<br/>
+  <h1 align="center">
+    Go-MVC
+  </h1>
+</div>
 
-go语言gin框架搭建的MVC模式（参考PHP语言Laravel和ThinkPHP框架）web项目，集成了数据库gorm、类型转换cast等常用包，以及一些代码示例；控制器层和路由层做了仿继承处理，方便添加统一的属性和方法，模型、模板、控制器、路由、常量、验证器、模块等都做了分离处理，分配到各个模块
+项目地址：https://github.com/jian1098/go-mvc
 
-本项目测试环境为`go 1.22.0`
+
+
+## 项目说明
+
+go语言gin框架搭建的MVC模式（参考PHP语言Laravel和ThinkPHP框架结构）web开发框架项目，集成了数据库gorm、类型转换cast等常用包，以及一些代码示例；控制器层和路由层做了仿继承处理，方便添加统一的属性和方法，模型、模板、控制器、路由、常量、验证器、服务、全局日志、全局DB等都做了分离处理，分配到各个模块
+
+
+
+## 运行环境
+
+本项目测试环境为`go 1.22.0`，理论上` go version >= 1.20`即可
 
 
 
@@ -20,13 +36,16 @@ go语言gin框架搭建的MVC模式（参考PHP语言Laravel和ThinkPHP框架）
 |   |       |-- baseController.go
 |   |       `-- indexController.go
 |   |   `-- requests						 #api请求参数结构体
-|   |-- common								#公共模块
+|   |   `-- responses						 #api响应结构体
+|   |-- utils								#公共模块
 |   |   |-- db.go
 |   |   `-- zapLogger.go
 |   |-- constants							 #常量目录
 |   |   `-- Response.go
 |   |-- middlewares							 #中间件目录
-|   |   `-- IpBlackList.go
+|   |   `-- Cors.go
+|   |-- services							 #服务层目录
+|   |   `-- UserServices.go
 |   `-- models								 #模型结构体目录
 |       `-- User.go
 |-- .env									#环境配置

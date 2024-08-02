@@ -13,9 +13,8 @@ import (
 var conn *gorm.DB
 
 /*
-*
-DB实例
-*/
+* DB实例
+ */
 func Instance() *gorm.DB {
 	if conn == nil {
 		conn = InitConn()
