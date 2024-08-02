@@ -3,6 +3,7 @@ package services
 import (
 	"go-mvc/app/api/responses"
 	"go-mvc/app/models"
+	"go-mvc/app/utils/db"
 )
 
 // 用户服务
@@ -14,7 +15,7 @@ func (service UserService) GetUserInfo(userId int) (*responses.UserInfo, error) 
 	//查找用户
 	var user models.User
 	var userInfo responses.UserInfo
-	err := db.Where("id = ?", userId).Select("id, name, mobile").First(&user).Error
+	err := db.Instance().Where("id = ?", userId).Select("id, name, mobile").First(&user).Error
 	if err != nil {
 		return &userInfo, err
 	}

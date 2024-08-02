@@ -2,6 +2,7 @@ package api
 
 import (
 	"go-mvc/app/models"
+	"go-mvc/app/utils/db"
 	"go-mvc/app/utils/response"
 
 	"github.com/gin-gonic/gin"
@@ -69,7 +70,7 @@ func (con IndexController) Upload(cxt *gin.Context) {
 // 数据库操作
 func (con IndexController) Db(cxt *gin.Context) {
 	var user models.User
-	err := db.Where("id = ?", 0).First(&user).Error
+	err := db.Instance().Where("id = ?", 0).First(&user).Error
 	if err != nil {
 		logger.Error(err)
 		response.Fail(cxt, err.Error())

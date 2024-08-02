@@ -1,4 +1,4 @@
-package utils
+package db
 
 import (
 	"fmt"
@@ -10,10 +10,23 @@ import (
 	"github.com/spf13/cast"
 )
 
+var conn *gorm.DB
+
+/*
+*
+DB实例
+*/
+func Instance() *gorm.DB {
+	if conn == nil {
+		conn = InitConn()
+	}
+	return conn
+}
+
 /**
- * 获取数据库连接
+ * 初始化数据库连接
  */
-func GetDB() *gorm.DB {
+func InitConn() *gorm.DB {
 	//获取环境变量
 	err := godotenv.Load(".env")
 	if err != nil {

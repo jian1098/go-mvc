@@ -6,7 +6,6 @@ import (
 	"github.com/spf13/cast"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	"go.uber.org/zap"
 )
 
@@ -19,12 +18,10 @@ type BaseController struct {
  */
 var logger *zap.SugaredLogger //全局日志
 var moduleName = "api"        //模块名称
-var db *gorm.DB               //数据库
 
 // 构造函数
 func init() {
 	logger = utils.GetLogger()
-	db = utils.GetDB()
 }
 
 // 获取当前模块名称

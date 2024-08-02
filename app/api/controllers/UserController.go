@@ -5,6 +5,7 @@ import (
 	"go-mvc/app/models"
 	"go-mvc/app/services"
 	"go-mvc/app/utils"
+	"go-mvc/app/utils/db"
 	"go-mvc/app/utils/response"
 
 	"github.com/gin-gonic/gin"
@@ -26,7 +27,7 @@ func (con UserController) Login(cxt *gin.Context) {
 
 	//查找用户
 	var user models.User
-	err := db.Where("mobile = ?", form.Mobile).First(&user).Error
+	err := db.Instance().Where("mobile = ?", form.Mobile).First(&user).Error
 	if err != nil {
 		response.Fail(cxt, "手机号码未注册")
 		return
