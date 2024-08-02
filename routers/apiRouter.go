@@ -17,7 +17,8 @@ func initApiRouter(router *gin.Engine) {
 	//需要登录的路由组
 	loginGroup := router.Group("/api") //路由组前缀
 	//使用中间件
-	loginGroup.Use(middlewares.JwtAuth())
+	loginGroup.Use(middlewares.JwtAuth()) //jwt验证中间件
+	loginGroup.Use(middlewares.Cors())    //跨域中间件
 	{
 		//用户路由组
 		userRouter := loginGroup.Group("/user")
@@ -29,6 +30,7 @@ func initApiRouter(router *gin.Engine) {
 
 	//不需要登录的路由组
 	noLoginGroup := router.Group("/api") //路由组前缀
+	noLoginGroup.Use(middlewares.Cors()) //跨域中间件
 	{
 		//单独路由示例模块
 		noLoginGroup.GET("/index/demo", api.IndexController{}.Demo)      //demo
