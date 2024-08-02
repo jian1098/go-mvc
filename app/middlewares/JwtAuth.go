@@ -2,9 +2,8 @@ package middlewares
 
 import (
 	"fmt"
-	"go-mvc/app/constants"
 	"go-mvc/app/utils"
-	"net/http"
+	"go-mvc/app/utils/response"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -19,13 +18,7 @@ func JwtAuth() gin.HandlerFunc {
 		payLoad, ok := utils.ParseJwt(token)
 		fmt.Println("payLoad:", token, payLoad, ok)
 		if !ok {
-			var code = constants.API_FAIL_CODE
-			c.JSON(http.StatusOK, gin.H{
-				"code": code,
-				"msg":  "请先登录",
-				"data": nil,
-			})
-			c.Abort()
+			response.Fail(c, "请先登录")
 			return
 		}
 

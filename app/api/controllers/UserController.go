@@ -5,6 +5,7 @@ import (
 	"go-mvc/app/models"
 	"go-mvc/app/services"
 	"go-mvc/app/utils"
+	"go-mvc/app/utils/response"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -16,10 +17,10 @@ type UserController struct {
 }
 
 // 用户登录
-func (con UserController) Login(c *gin.Context) {
+func (con UserController) Login(cxt *gin.Context) {
 	var form requests.LoginForm
-	if err := c.ShouldBind(&form); err != nil && err.Error() != "" {
-		ResponseError(c, err.Error())
+	if err := cxt.ShouldBind(&form); err != nil && err.Error() != "" {
+		response.Fail(cxt, err.Error())
 		return
 	}
 
@@ -27,20 +28,20 @@ func (con UserController) Login(c *gin.Context) {
 	var user models.User
 	err := db.Where("mobile = ?", form.Mobile).First(&user).Error
 	if err != nil {
-		ResponseError(c, err.Error())
+		response.Fail(cxt, "手机号码未注册")
 		return
 	}
 
 	// 验证密码
 	if user.Password != utils.MD5(form.Password) {
-		ResponseError(c, "密码错误")
+		response.Fail(cxt, "密码错误")
 		return
 	}
 
 	//生成token
 	res, err := utils.CreateJwt(user.Id)
 	if err != nil {
-		ResponseError(c, err.Error())
+		response.Fail(cxt, err.Error())
 		return
 	}
 
@@ -52,20 +53,21 @@ func (con UserController) Login(c *gin.Context) {
 		"user_name":  user.Name,
 	}
 
-	ResponseSuccess(c, responseData, "登录成功")
+	response.Success(cxt, responseData, "登录成功")
 	return
 }
 
 // 用户信息
-func (con UserController) Info(c *gin.Context) {
-	userId := GetUserId(c)
+func (con UserController) Info(cxt *gin.Context) {
+	userId := GetUserId(cxt)
 
 	//获取用户信息
 	userInfo, err := services.UserService{}.GetUserInfo(userId)
 	if err != nil {
-		ResponseError(c, err.Error())
+		response.Fail(cxt, err.Error())
 		return
 	}
 
-	ResponseSuccess(c, userInfo, "请求成功")
+	response.Success(cxt, userInfo)
+	return
 }
