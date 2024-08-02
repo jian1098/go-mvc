@@ -3,6 +3,7 @@ package api
 import (
 	"go-mvc/app/models"
 	"go-mvc/app/utils/db"
+	"go-mvc/app/utils/log"
 	"go-mvc/app/utils/response"
 
 	"github.com/gin-gonic/gin"
@@ -58,7 +59,7 @@ func (con IndexController) Upload(cxt *gin.Context) {
 	//文件上传路径和文件名
 	err := cxt.SaveUploadedFile(file, "./uploads/images/"+file.Filename)
 	//记录错误日志
-	logger.Error(err)
+	log.Instance().Error(err)
 	if err != nil {
 		response.Fail(cxt, err.Error())
 	} else {
@@ -72,7 +73,7 @@ func (con IndexController) Db(cxt *gin.Context) {
 	var user models.User
 	err := db.Instance().Where("id = ?", 0).First(&user).Error
 	if err != nil {
-		logger.Error(err)
+		log.Instance().Error(err)
 		response.Fail(cxt, err.Error())
 	} else {
 		response.Success(cxt, user, "请求成功")

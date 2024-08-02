@@ -2,7 +2,7 @@ package main
 
 import (
 	"go-mvc/app/utils"
-	"go-mvc/app/utils/db"
+	"go-mvc/app/utils/log"
 	"go-mvc/routers"
 	"os"
 
@@ -12,12 +12,10 @@ import (
 func main() {
 	//初始化路由
 	router := routers.BaseRouter{}.InitRouter()
+	log.Instance().Info("启动服务")
 
 	//初始化验证器
 	utils.InitValidator()
-
-	//初始化数据库连接
-	db.InitConn()
 
 	//启动http服务
 	err := router.Run(os.Getenv("HTTP_HOST") + ":" + os.Getenv("HTTP_PORT"))

@@ -1,4 +1,4 @@
-package utils
+package log
 
 import (
 	"os"
@@ -10,7 +10,17 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-func GetLogger() *zap.SugaredLogger {
+var logger *zap.SugaredLogger
+
+// log实例
+func Instance() *zap.SugaredLogger {
+	if logger == nil {
+		logger = InitLog()
+	}
+	return logger
+}
+
+func InitLog() *zap.SugaredLogger {
 	var coreArr []zapcore.Core
 	env, err := godotenv.Read()
 	if err != nil {
